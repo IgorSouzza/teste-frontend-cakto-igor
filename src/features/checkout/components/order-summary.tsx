@@ -1,7 +1,37 @@
+"use client";
+
 import { ShoppingCart } from "lucide-react";
 import { OrderSummaryRow } from "./order-summary-row";
+import { formatCurrencyBRL } from "@/shared/utils/formatters";
+import { useEffect, useState } from "react";
+import { useCheckoutFormStore } from "../stores/form-store";
+import { calculateInstallments } from "../helpers/calculate-installments";
 
-export function OrderSummary() {
+type OrderSummaryProps = {
+  productBaseValue: number;
+  producerName: string;
+};
+
+export function OrderSummary({
+  productBaseValue,
+  producerName,
+}: OrderSummaryProps) {
+  const [platformTax, setPlatformTax] = useState(0);
+  const paymentMethod = useCheckoutFormStore((store) => store.paymentMethod);
+
+  useEffect(() => {
+    if (paymentMethod === "credit_card") {
+      const installments = calculateInstallments(productBaseValue, 4);
+      const lastInstallment = installments[installments.length - 1];
+      setPlatformTax(Math.abs(productBaseValue - lastInstallment.totalValue));
+    } else {
+      setPlatformTax(0);
+    }
+  }, [paymentMethod, productBaseValue]);
+
+  const totalPrice = productBaseValue + platformTax;
+  const producerTotal = productBaseValue - platformTax;
+
   return (
     <div className="mt-8">
       <div className="flex items-center gap-2">
@@ -10,13 +40,22 @@ export function OrderSummary() {
       </div>
 
       <div className="border rounded p-2 space-y-2 border-primary mt-4 w-full">
-        <OrderSummaryRow label="Produto" value="R$ 0,00" />
-        <OrderSummaryRow label="Taxa Cakto" value="R$ 0,00" />
-        <OrderSummaryRow label="Total" value="R$ 0,00" />
+        <OrderSummaryRow
+          label="Produto"
+          value={formatCurrencyBRL(productBaseValue)}
+        />
+        <OrderSummaryRow
+          label="Taxa Cakto"
+          value={formatCurrencyBRL(Math.abs(platformTax))}
+        />
+        <OrderSummaryRow label="Total" value={formatCurrencyBRL(totalPrice)} />
 
         <div className="w-full h-[1px] bg-foreground/60" />
 
-        <OrderSummaryRow label="João recebe" value="R$ 0,00" />
+        <OrderSummaryRow
+          label={`${producerName} recebe`}
+          value={formatCurrencyBRL(producerTotal)}
+        />
       </div>
     </div>
   );

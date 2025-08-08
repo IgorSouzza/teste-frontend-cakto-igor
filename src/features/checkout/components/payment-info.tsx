@@ -1,16 +1,17 @@
 "use client";
 
-import { useState } from "react";
 import { BadgeCheck, CreditCard } from "lucide-react";
 
 import { PaymentInfoBox } from "./payment-info-box";
-
-type Methods = "pix" | "credit_card";
+import { PaymentMethod, useCheckoutFormStore } from "../stores/form-store";
 
 export function PaymentInfo() {
-  const [selectedMethod, setSelectedMethod] = useState<Methods>("pix");
+  const paymentMethod = useCheckoutFormStore((store) => store.paymentMethod);
+  const setPaymentMethod = useCheckoutFormStore(
+    (store) => store.setPaymentMethod
+  );
 
-  const extraInfo: Record<Methods, string[]> = {
+  const extraInfo: Record<PaymentMethod, string[]> = {
     pix: [
       "Liberação Imediata",
       "Pague em segundos com o aplicativo de seu banco",
@@ -18,9 +19,9 @@ export function PaymentInfo() {
     credit_card: [],
   };
 
-  function handleChangeMethod(method: Methods) {
-    if (selectedMethod === method) return;
-    setSelectedMethod(method);
+  function handleChangeMethod(method: PaymentMethod) {
+    if (paymentMethod === method) return;
+    setPaymentMethod(method);
   }
 
   return (
@@ -32,7 +33,7 @@ export function PaymentInfo() {
 
       <div className="grid grid-cols-2 gap-2 mt-4">
         <PaymentInfoBox
-          selected={selectedMethod === "pix"}
+          selected={paymentMethod === "pix"}
           onClick={() => handleChangeMethod("pix")}
           flag="Taxa 0%"
         >
@@ -42,7 +43,7 @@ export function PaymentInfo() {
           </h3>
         </PaymentInfoBox>
         <PaymentInfoBox
-          selected={selectedMethod === "credit_card"}
+          selected={paymentMethod === "credit_card"}
           onClick={() => handleChangeMethod("credit_card")}
         >
           <CreditCard />
@@ -51,9 +52,9 @@ export function PaymentInfo() {
           </h3>
         </PaymentInfoBox>
       </div>
-      {extraInfo[selectedMethod].length > 0 && (
+      {!!paymentMethod && extraInfo[paymentMethod].length > 0 && (
         <div className="flex gap-2 flex-col border-primary border mt-2 p-4 rounded">
-          {extraInfo[selectedMethod].map((item) => (
+          {extraInfo[paymentMethod].map((item) => (
             <div key={item} className="flex items-start gap-2">
               <BadgeCheck className="size-4 mt-1 sm:mt-0 fill-primary" />
               <span className="text-sm">{item}</span>
