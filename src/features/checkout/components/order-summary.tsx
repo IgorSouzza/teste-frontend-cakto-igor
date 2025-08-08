@@ -18,16 +18,21 @@ export function OrderSummary({
 }: OrderSummaryProps) {
   const [platformTax, setPlatformTax] = useState(0);
   const paymentMethod = useCheckoutFormStore((store) => store.paymentMethod);
+  const totalInstallments = useCheckoutFormStore((store) => store.installments);
 
   useEffect(() => {
     if (paymentMethod === "credit_card") {
-      const installments = calculateInstallments(productBaseValue, 4);
+      if (totalInstallments === 0) return
+      const installments = calculateInstallments(
+        productBaseValue,
+        totalInstallments
+      );
       const lastInstallment = installments[installments.length - 1];
       setPlatformTax(Math.abs(productBaseValue - lastInstallment.totalValue));
     } else {
       setPlatformTax(0);
     }
-  }, [paymentMethod, productBaseValue]);
+  }, [paymentMethod, productBaseValue, totalInstallments]);
 
   const totalPrice = productBaseValue + platformTax;
   const producerTotal = productBaseValue - platformTax;

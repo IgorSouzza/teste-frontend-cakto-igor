@@ -5,6 +5,8 @@ import { ProductForm } from "./components/product-form";
 import { ProductInfo } from "./components/product-info";
 import { SubmitButton } from "./components/submit-button";
 
+export const MAX_INSTALLMENTS = 12;
+
 export async function CheckoutPage({ productId }: { productId: string }) {
   const product = await getProduct(productId);
 

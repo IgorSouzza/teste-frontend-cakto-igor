@@ -6,14 +6,13 @@ import {
 } from "@/shared/components/ui/headers";
 import { formatCurrencyBRL } from "@/shared/utils/formatters";
 import { calculateInstallments } from "../helpers/calculate-installments";
+import { MAX_INSTALLMENTS } from "../page";
 
 type ProductInfoProps = {
   name: string;
   originalPrice: number;
   currentPrice: number;
 };
-
-const MAX_INSTALLMENTS = 12;
 
 export function ProductInfo({
   currentPrice,

@@ -4,11 +4,28 @@ import { BadgeCheck, CreditCard } from "lucide-react";
 
 import { PaymentInfoBox } from "./payment-info-box";
 import { PaymentMethod, useCheckoutFormStore } from "../stores/form-store";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/shared/components/ui/select";
+import { MAX_INSTALLMENTS } from "../page";
+import { calculateInstallments } from "../helpers/calculate-installments";
+import { formatCurrencyBRL } from "@/shared/utils/formatters";
 
 export function PaymentInfo() {
+  const installments = calculateInstallments(297, MAX_INSTALLMENTS);
+
   const paymentMethod = useCheckoutFormStore((store) => store.paymentMethod);
   const setPaymentMethod = useCheckoutFormStore(
     (store) => store.setPaymentMethod
+  );
+  const setInstallments = useCheckoutFormStore(
+    (store) => store.setInstallments
   );
 
   const extraInfo: Record<PaymentMethod, string[]> = {
@@ -22,6 +39,10 @@ export function PaymentInfo() {
   function handleChangeMethod(method: PaymentMethod) {
     if (paymentMethod === method) return;
     setPaymentMethod(method);
+  }
+
+  function handleSelectInstallments(installments: string) {
+    setInstallments(Number(installments));
   }
 
   return (
@@ -60,6 +81,30 @@ export function PaymentInfo() {
               <span className="text-sm">{item}</span>
             </div>
           ))}
+        </div>
+      )}
+
+      {paymentMethod === "credit_card" && (
+        <div className="mt-4">
+          <Select onValueChange={handleSelectInstallments}>
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Selecione as parcelas" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Parcelas</SelectLabel>
+                {installments.map((installment) => (
+                  <SelectItem
+                    key={installment.number}
+                    value={String(installment.number)}
+                  >
+                    {installment.number}x de{" "}
+                    {formatCurrencyBRL(installment.installmentValue)}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
         </div>
       )}
     </div>
