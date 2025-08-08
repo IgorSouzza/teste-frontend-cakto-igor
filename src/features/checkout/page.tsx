@@ -1,4 +1,5 @@
 import { getProduct } from "./actions/get-product";
+import { ProductForm } from "./components/product-form";
 import { ProductInfo } from "./components/product-info";
 
 export async function CheckoutPage({ productId }: { productId: string }) {
@@ -11,6 +12,7 @@ export async function CheckoutPage({ productId }: { productId: string }) {
         currentPrice={product.currentPrice}
         originalPrice={product.originalPrice}
       />
+      <ProductForm />
     </div>
   );
 }

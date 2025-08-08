@@ -22,9 +22,9 @@ export function ProductInfo({
       <Image
         src="https://framerusercontent.com/images/dwsUDbqeEUic6MtNScUrnTEIJY.webp"
         alt=""
-        width={200}
-        height={200}
-        className="bg-primary rounded-lg h-fit"
+        width={400}
+        height={400}
+        className="bg-primary rounded-lg h-fit w-full sm:w-fit object-fit"
       />
       <div className="flex flex-col">
         <TypographyH3>{name}</TypographyH3>
