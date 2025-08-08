@@ -1,3 +1,5 @@
+import { Button } from "@/shared/components/ui/button";
+
 export function CheckoutPage() {
-  return <h1>Test</h1>
+  return <Button>Test Button</Button>
 }
