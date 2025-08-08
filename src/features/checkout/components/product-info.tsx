@@ -5,6 +5,7 @@ import {
   TypographyParagraph,
 } from "@/shared/components/ui/headers";
 import { formatCurrencyBRL } from "@/shared/utils/formatters";
+import { calculateInstallments } from "../helpers/calculate-installments";
 
 type ProductInfoProps = {
   name: string;
@@ -12,11 +13,16 @@ type ProductInfoProps = {
   currentPrice: number;
 };
 
+const MAX_INSTALLMENTS = 12;
+
 export function ProductInfo({
   currentPrice,
   originalPrice,
   name,
 }: ProductInfoProps) {
+  const installments = calculateInstallments(currentPrice, MAX_INSTALLMENTS);
+  const lastInstallment = installments[installments.length - 1];
+
   return (
     <div className="flex flex-col sm:flex-row mt-4 gap-4">
       <Image
@@ -35,11 +41,10 @@ export function ProductInfo({
           <TypographyParagraph className="text-primary font-bold -mt-0.5 text-2xl">
             {formatCurrencyBRL(currentPrice)}
           </TypographyParagraph>
+          <span className="text-sm text-muted-foreground">À vista no PIX</span>
           <span className="text-sm text-muted-foreground">
-            À vista no PIX
-          </span>
-          <span className="text-sm text-muted-foreground">
-            R$ 0,00 em até 4x de R$ 0,00 no cartão
+            ou em até {lastInstallment.number}x de{" "}
+            {formatCurrencyBRL(lastInstallment.installmentValue)} no cartão
           </span>
         </div>
       </div>
