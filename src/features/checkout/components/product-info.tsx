@@ -24,7 +24,7 @@ export function ProductInfo({
         alt=""
         width={400}
         height={400}
-        className="bg-primary rounded-lg h-fit w-full sm:w-fit object-fit"
+        className="bg-primary rounded-lg h-fit w-full sm:w-48 object-fit"
       />
       <div className="flex flex-col">
         <TypographyH3>{name}</TypographyH3>
@@ -35,7 +35,7 @@ export function ProductInfo({
           <TypographyParagraph className="text-primary font-bold -mt-0.5 text-2xl">
             {formatCurrencyBRL(currentPrice)}
           </TypographyParagraph>
-          <span className="text-sm text-muted-foreground mt-2">
+          <span className="text-sm text-muted-foreground">
             À vista no PIX
           </span>
           <span className="text-sm text-muted-foreground">
