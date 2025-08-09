@@ -6,6 +6,7 @@ import { formatCurrencyBRL } from "@/shared/utils/formatters";
 import { useEffect, useState } from "react";
 import { useCheckoutFormStore } from "../stores/form-store";
 import { calculateInstallments } from "../helpers/calculate-installments";
+import { cn } from "@/shared/lib/utils";
 
 type OrderSummaryProps = {
   productBaseValue: number;
@@ -22,7 +23,7 @@ export function OrderSummary({
 
   useEffect(() => {
     if (paymentMethod === "credit_card") {
-      if (totalInstallments === 0) return
+      if (totalInstallments === 0) return;
       const installments = calculateInstallments(
         productBaseValue,
         totalInstallments
@@ -44,7 +45,12 @@ export function OrderSummary({
         <h4 className="text-lg font-semibold">Resumo do Pedido</h4>
       </div>
 
-      <div className="border rounded p-2 space-y-2 border-primary mt-4 w-full">
+      <div
+        className={cn(
+          "relative border rounded p-2 space-y-2 border-primary mt-4 w-full",
+          platformTax > 0 && " pb-8"
+        )}
+      >
         <OrderSummaryRow
           label="Produto"
           value={formatCurrencyBRL(productBaseValue)}
@@ -61,6 +67,18 @@ export function OrderSummary({
           label={`${producerName} recebe`}
           value={formatCurrencyBRL(producerTotal)}
         />
+
+        {platformTax > 0 && (
+          <div className="w-full bg-primary/20 text-xs py-1 flex items-center justify-center absolute left-0 bottom-0">
+            <span>
+              Dica: economize até{" "}
+              <span className="font-bold">
+                {formatCurrencyBRL(platformTax)}
+              </span>{" "}
+              ao pagar com PIX!
+            </span>
+          </div>
+        )}
       </div>
     </div>
   );

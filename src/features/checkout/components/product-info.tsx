@@ -7,6 +7,7 @@ import {
 import { formatCurrencyBRL } from "@/shared/utils/formatters";
 import { calculateInstallments } from "../helpers/calculate-installments";
 import { MAX_INSTALLMENTS } from "../page";
+import { PixIcon } from "@/shared/components/icons";
 
 type ProductInfoProps = {
   name: string;
@@ -40,7 +41,9 @@ export function ProductInfo({
           <TypographyParagraph className="text-primary font-bold -mt-0.5 text-2xl">
             {formatCurrencyBRL(currentPrice)}
           </TypographyParagraph>
-          <span className="text-sm text-muted-foreground">À vista no PIX</span>
+          <span className="text-sm text-muted-foreground flex items-center gap-1">
+            <PixIcon size={12} />À vista no PIX
+          </span>
           <span className="text-sm text-muted-foreground">
             ou em até {lastInstallment.number}x de{" "}
             {formatCurrencyBRL(lastInstallment.installmentValue)} no cartão

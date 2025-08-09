@@ -18,7 +18,10 @@ export async function CheckoutPage({ productId }: { productId: string }) {
         originalPrice={product.originalPrice}
       />
       <ProductForm />
-      <PaymentInfo />
+      <PaymentInfo
+        currentPrice={product.currentPrice}
+        deliveryTime={product.deliveryTime}
+      />
       <OrderSummary
         productBaseValue={product.currentPrice}
         producerName={product.producer}

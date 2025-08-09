@@ -16,9 +16,19 @@ import {
 import { MAX_INSTALLMENTS } from "../page";
 import { calculateInstallments } from "../helpers/calculate-installments";
 import { formatCurrencyBRL } from "@/shared/utils/formatters";
+import { PixIcon } from "@/shared/components/icons";
 
-export function PaymentInfo() {
-  const installments = calculateInstallments(297, MAX_INSTALLMENTS);
+export function PaymentInfo({
+  deliveryTime,
+  currentPrice,
+}: {
+  deliveryTime: string;
+  currentPrice: number;
+}) {
+  const calculatedInstallments = calculateInstallments(
+    currentPrice,
+    MAX_INSTALLMENTS
+  );
 
   const paymentMethod = useCheckoutFormStore((store) => store.paymentMethod);
   const setPaymentMethod = useCheckoutFormStore(
@@ -28,17 +38,22 @@ export function PaymentInfo() {
     (store) => store.setInstallments
   );
 
-  const extraInfo: Record<PaymentMethod, string[]> = {
-    pix: [
-      "Liberação Imediata",
-      "Pague em segundos com o aplicativo de seu banco",
-    ],
-    credit_card: [],
+  const extraInfo: Record<PaymentMethod, () => string[]> = {
+    pix: () => {
+      const isInstant = deliveryTime === "imediato";
+      const features = ["Pague em segundos com o aplicativo de seu banco"];
+      if (isInstant) features.push("Liberação Imediata");
+      return features;
+    },
+    credit_card: () => [],
   };
 
   function handleChangeMethod(method: PaymentMethod) {
     if (paymentMethod === method) return;
     setPaymentMethod(method);
+    if (method === "pix") {
+      setInstallments(0);
+    }
   }
 
   function handleSelectInstallments(installments: string) {
@@ -58,7 +73,7 @@ export function PaymentInfo() {
           onClick={() => handleChangeMethod("pix")}
           flag="Taxa 0%"
         >
-          <CreditCard />
+          <PixIcon />
           <h3 className="text-primary-foreground font-semibold text-xs sm:text-lg">
             PIX
           </h3>
@@ -73,9 +88,9 @@ export function PaymentInfo() {
           </h3>
         </PaymentInfoBox>
       </div>
-      {!!paymentMethod && extraInfo[paymentMethod].length > 0 && (
+      {!!paymentMethod && extraInfo[paymentMethod]().length > 0 && (
         <div className="flex gap-2 flex-col border-primary border mt-2 p-4 rounded">
-          {extraInfo[paymentMethod].map((item) => (
+          {extraInfo[paymentMethod]().map((item) => (
             <div key={item} className="flex items-start gap-2">
               <BadgeCheck className="size-4 mt-1 sm:mt-0 fill-primary" />
               <span className="text-sm">{item}</span>
@@ -93,7 +108,7 @@ export function PaymentInfo() {
             <SelectContent>
               <SelectGroup>
                 <SelectLabel>Parcelas</SelectLabel>
-                {installments.map((installment) => (
+                {calculatedInstallments.map((installment) => (
                   <SelectItem
                     key={installment.number}
                     value={String(installment.number)}
