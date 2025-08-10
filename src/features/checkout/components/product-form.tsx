@@ -61,6 +61,7 @@ export function ProductForm({ product }: ProductFormProps) {
 
       router.push("/checkout/success");
     } catch (err) {
+      // TODO: add a toast to notify error to user.
       console.log(err);
     }
   }
