@@ -2,6 +2,9 @@
 
 _Simula a criação de um fluxo de mini-checkout para a venda de um curso digital. O objetivo central é demonstrar a implementação da lógica de negócio, incluindo o cálculo dinâmico de taxas de parcelamento e a exibição de um resumo do pedido em tempo real._
 
+<img width="1278" height="1085" alt="cakto" src="https://github.com/user-attachments/assets/b1070eaa-7bf8-4362-b436-980f6478068d" />
+
+
 ## 🚀 Decisões Técnicas
 
 - Para a organização do código-fonte, foi adotada a abordagem de **Feature-Based Folders** (pastas baseadas em funcionalidades). Neste modelo, em vez de agrupar arquivos por seu tipo técnico (como components, hooks, services), todos os artefatos relacionados a uma mesma funcionalidade de negócio são encapsulados em um único diretório. Por exemplo, toda a lógica do checkout, incluindo seus componentes, tipos e serviços, reside no diretório src/features/checkout.
