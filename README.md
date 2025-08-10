@@ -2,7 +2,8 @@
 
 _Simula a criação de um fluxo de mini-checkout para a venda de um curso digital. O objetivo central é demonstrar a implementação da lógica de negócio, incluindo o cálculo dinâmico de taxas de parcelamento e a exibição de um resumo do pedido em tempo real._
 
-<img width="1278" height="1085" alt="cakto" src="https://github.com/user-attachments/assets/b1070eaa-7bf8-4362-b436-980f6478068d" />
+<img width="1920" height="1085" alt="cakto" src="https://github.com/user-attachments/assets/3b9753c7-0ae3-4359-97bd-81ffc313b637" />
+
 
 
 ## 🚀 Decisões Técnicas
