@@ -1,36 +1,47 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Teste Front-end
 
-## Getting Started
+_Simula a criação de um fluxo de mini-checkout para a venda de um curso digital. O objetivo central é demonstrar a implementação da lógica de negócio, incluindo o cálculo dinâmico de taxas de parcelamento e a exibição de um resumo do pedido em tempo real._
 
-First, run the development server:
+## 🚀 Decisões Técnicas
+
+- Para a organização do código-fonte, foi adotada a abordagem de **Feature-Based Folders** (pastas baseadas em funcionalidades). Neste modelo, em vez de agrupar arquivos por seu tipo técnico (como components, hooks, services), todos os artefatos relacionados a uma mesma funcionalidade de negócio são encapsulados em um único diretório. Por exemplo, toda a lógica do checkout, incluindo seus componentes, tipos e serviços, reside no diretório src/features/checkout.
+- **Zustand**: Escolhido pela simplicidade e performance, gerenciando o estado global com o mínimo de boilerplate e evitando re-renderizações desnecessárias.
+- **React Hook Form**: Utilizado para garantir formulários de alta performance, minimizando re-renderizações ao usar componentes não controlados e simplificando a lógica de validação.
+- **TailwindCSS**: Adotado para agilizar o desenvolvimento de interfaces. Sua abordagem utility-first permite construir layouts consistentes diretamente no JSX.
+- **Framer Motion**: Selecionado para criar microinterações e animações fluidas, melhorando o feedback visual e a experiência do usuário de forma declarativa.
+- **Next.js Server Actions**: Implementado para simplificar e proteger as chamadas ao back-end, permitindo executar lógica no servidor sem a necessidade de criar APIs manualmente.
+
+A escolha do **TypeScript** foi fundamental para adicionar uma camada de segurança de tipos, prevenindo bugs comuns em tempo de desenvolvimento e melhorando a clareza das interfaces.
+
+## ⚙️ Como Rodar Localmente
+
+Siga os passos abaixo para configurar e executar o projeto em seu ambiente de desenvolvimento.
+
+1.  **Clone o repositório**
+
+    ```bash
+    git clone https://github.com/IgorSouzza/teste-frontend-cakto-igor
+    cd teste-frontend-cakto-igor
+    ```
+
+2.  **Instale as dependências**
+    Este projeto utiliza `npm` para gerenciamento de pacotes. Execute o comando abaixo na raiz do projeto:
+
+    ```bash
+    npm install
+    ```
+
+3.  **Execute o projeto**
+    Para iniciar o servidor de desenvolvimento ou rodar a aplicação principal, use:
+    ```bash
+    npm run dev
+    ```
+    _(Lembre-se de ajustar este comando se o seu script no `package.json` for diferente, como `npm start`)_.
+
+## ✅ Testes
+
+A integridade da lógica de negócio é validada através de uma suíte de testes automatizados. Para executar todos os testes e verificar se tudo está funcionando como esperado, utilize o comando:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run test
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
