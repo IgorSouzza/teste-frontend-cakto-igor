@@ -15,12 +15,13 @@ export function PaymentInfoBox({
   flag,
 }: PaymentInfoBoxProps) {
   return (
-    <div
+    <button
       className={cn(
         "p-8 rounded-lg relative flex items-center justify-center flex-col gap-2 cursor-pointer hover:bg-primary/20 transition-all",
         selected ? "bg-primary" : "border-2 border-primary"
       )}
       onClick={onClick}
+      type="button"
     >
       {flag && (
         <div className="absolute right-0 top-0 text-xs flex gap-0.5 items-center justify-center bg-violet-500 rounded-tr rounded-bl py-0.5 px-2  sm:py-2 sm:px-6">
@@ -29,6 +30,6 @@ export function PaymentInfoBox({
         </div>
       )}
       {children}
-    </div>
+    </button>
   );
 }

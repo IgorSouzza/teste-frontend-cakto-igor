@@ -10,7 +10,7 @@ import { MAX_INSTALLMENTS } from "../page";
 import { PixIcon } from "@/shared/components/icons";
 import { Product } from "@/shared/entities/product";
 import { Badge } from "@/shared/components/ui/badge";
-import { Clock, GlobeIcon } from "lucide-react";
+import { Clock, GlobeIcon, UserIcon } from "lucide-react";
 
 type ProductInfoProps = {
   product: Product;
@@ -34,6 +34,10 @@ export function ProductInfo({ product }: ProductInfoProps) {
       />
       <div className="flex flex-col">
         <div className="flex gap-2 mb-1">
+          <Badge variant="default" className="capitalize">
+            <UserIcon />
+            {product.producer}
+          </Badge>
           <Badge variant="secondary" className="capitalize">
             <GlobeIcon />
             {product.format}

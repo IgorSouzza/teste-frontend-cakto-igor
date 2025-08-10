@@ -106,7 +106,7 @@ export function PaymentInfo({
             duration: 0.4,
             ease: "easeInOut",
           }}
-          className="flex gap-2 flex-col border-primary border mt-2 p-4 rounded-lg"
+          className="flex gap-2 flex-col border-primary border mt-4 p-4 rounded-lg"
         >
           {extraInfo[paymentMethod]().map((item) => (
             <div key={item} className="flex items-start gap-2">
