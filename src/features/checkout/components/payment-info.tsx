@@ -1,6 +1,8 @@
 "use client";
 
 import { BadgeCheck, CreditCard } from "lucide-react";
+import { motion } from "framer-motion";
+import { useEffect } from "react";
 
 import { PaymentInfoBox } from "./payment-info-box";
 import { PaymentMethod, useCheckoutFormStore } from "../stores/form-store";
@@ -17,12 +19,14 @@ import { MAX_INSTALLMENTS } from "../page";
 import { calculateInstallments } from "../helpers/calculate-installments";
 import { formatCurrencyBRL } from "@/shared/utils/formatters";
 import { PixIcon } from "@/shared/components/icons";
+import { ProductDeliveryTime } from "@/shared/entities/product";
+import { Label } from "@/shared/components/ui/label";
 
 export function PaymentInfo({
   deliveryTime,
   currentPrice,
 }: {
-  deliveryTime: string;
+  deliveryTime: ProductDeliveryTime;
   currentPrice: number;
 }) {
   const calculatedInstallments = calculateInstallments(
@@ -53,12 +57,18 @@ export function PaymentInfo({
     setPaymentMethod(method);
     if (method === "pix") {
       setInstallments(0);
+    } else {
+      setInstallments(1);
     }
   }
 
   function handleSelectInstallments(installments: string) {
     setInstallments(Number(installments));
   }
+
+  useEffect(() => {
+    setInstallments(1);
+  }, [setInstallments]);
 
   return (
     <div className="mt-8">
@@ -89,23 +99,42 @@ export function PaymentInfo({
         </PaymentInfoBox>
       </div>
       {!!paymentMethod && extraInfo[paymentMethod]().length > 0 && (
-        <div className="flex gap-2 flex-col border-primary border mt-2 p-4 rounded">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            duration: 0.4,
+            ease: "easeInOut",
+          }}
+          className="flex gap-2 flex-col border-primary border mt-2 p-4 rounded-lg"
+        >
           {extraInfo[paymentMethod]().map((item) => (
             <div key={item} className="flex items-start gap-2">
               <BadgeCheck className="size-4 mt-1 sm:mt-0 fill-primary" />
               <span className="text-sm">{item}</span>
             </div>
           ))}
-        </div>
+        </motion.div>
       )}
 
       {paymentMethod === "credit_card" && (
-        <div className="mt-4">
-          <Select onValueChange={handleSelectInstallments}>
+        <motion.div
+          initial={{ opacity: 0, x: -30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{
+            duration: 0.4,
+            ease: "easeInOut",
+          }}
+          className="mt-4"
+        >
+          <Label htmlFor="installments" className="mb-2">
+            Parcelas
+          </Label>
+          <Select onValueChange={handleSelectInstallments} defaultValue="1">
             <SelectTrigger className="w-full">
               <SelectValue placeholder="Selecione as parcelas" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent id="installments">
               <SelectGroup>
                 <SelectLabel>Parcelas</SelectLabel>
                 {calculatedInstallments.map((installment) => (
@@ -113,14 +142,19 @@ export function PaymentInfo({
                     key={installment.number}
                     value={String(installment.number)}
                   >
-                    {installment.number}x de{" "}
-                    {formatCurrencyBRL(installment.installmentValue)}
+                    <span>
+                      {installment.number}x de{" "}
+                      {formatCurrencyBRL(installment.installmentValue)}
+                    </span>
+                    <span className="text-muted-foreground">
+                      - Total: {formatCurrencyBRL(installment.totalValue)}
+                    </span>
                   </SelectItem>
                 ))}
               </SelectGroup>
             </SelectContent>
           </Select>
-        </div>
+        </motion.div>
       )}
     </div>
   );

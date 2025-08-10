@@ -11,6 +11,7 @@ interface CheckoutFormState {
 }
 
 export const useCheckoutFormStore = create<CheckoutFormState>((set) => ({
+  paymentMethod: 'pix',
   installments: 0,
   setInstallments: (installments) => {
     set(() => ({ installments }));

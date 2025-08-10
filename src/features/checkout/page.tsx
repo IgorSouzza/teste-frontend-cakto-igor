@@ -12,11 +12,7 @@ export async function CheckoutPage({ productId }: { productId: string }) {
 
   return (
     <div>
-      <ProductInfo
-        name={product.name}
-        currentPrice={product.currentPrice}
-        originalPrice={product.originalPrice}
-      />
+      <ProductInfo product={product} />
       <ProductForm />
       <PaymentInfo
         currentPrice={product.currentPrice}

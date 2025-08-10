@@ -1,6 +1,8 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { ShoppingCart } from "lucide-react";
+
 import { OrderSummaryRow } from "./order-summary-row";
 import { formatCurrencyBRL } from "@/shared/utils/formatters";
 import { useEffect, useState } from "react";
@@ -47,37 +49,57 @@ export function OrderSummary({
 
       <div
         className={cn(
-          "relative border rounded p-2 space-y-2 border-primary mt-4 w-full",
+          "relative border rounded-lg p-4 space-y-3 border-primary mt-4 w-full",
           platformTax > 0 && " pb-8"
         )}
       >
         <OrderSummaryRow
-          label="Produto"
-          value={formatCurrencyBRL(productBaseValue)}
+          label={{ value: "Produto" }}
+          value={{ value: formatCurrencyBRL(productBaseValue) }}
         />
         <OrderSummaryRow
-          label="Taxa Cakto"
-          value={formatCurrencyBRL(Math.abs(platformTax))}
+          label={{ value: "Taxa Cakto" }}
+          value={{
+            value: formatCurrencyBRL(Math.abs(platformTax)),
+            className: platformTax === 0 ? "text-green-400" : "",
+          }}
         />
-        <OrderSummaryRow label="Total" value={formatCurrencyBRL(totalPrice)} />
 
-        <div className="w-full h-[1px] bg-foreground/60" />
+        <div className="w-full h-[1px] bg-foreground/40" />
 
         <OrderSummaryRow
-          label={`${producerName} recebe`}
-          value={formatCurrencyBRL(producerTotal)}
+          label={{ value: "Total", className: "text-white text-lg font-semibold" }}
+          value={{
+            value: formatCurrencyBRL(totalPrice),
+            className: "font-semibold text-lg",
+          }}
+        />
+        <OrderSummaryRow
+          label={{ value: `${producerName} recebe`, className: "text-sm" }}
+          value={{
+            value: formatCurrencyBRL(producerTotal),
+            className: "text-muted-foreground text-sm",
+          }}
         />
 
         {platformTax > 0 && (
-          <div className="w-full bg-primary/20 text-xs py-1 flex items-center justify-center absolute left-0 bottom-0">
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{
+              duration: 0.4,
+              ease: "easeInOut",
+            }}
+            className="w-full bg-primary/20 border-t border-primary rounded-b-lg text-sm py-1 flex items-center justify-center absolute left-0 bottom-0 text-[#83eab3]"
+          >
             <span>
-              Dica: economize até{" "}
+              Dica: economize{" "}
               <span className="font-bold">
                 {formatCurrencyBRL(platformTax)}
               </span>{" "}
               ao pagar com PIX!
             </span>
-          </div>
+          </motion.div>
         )}
       </div>
     </div>

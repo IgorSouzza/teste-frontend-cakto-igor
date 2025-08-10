@@ -1,8 +1,10 @@
 "use server";
 
-export async function getProduct(id: string) {
-  console.debug(`Getting product with id ${id}...`)
-  // Mocked return product
+import { Product } from "@/shared/entities/product";
+
+// Return mocked product
+export async function getProduct(id: string): Promise<Product> {
+  console.debug(`Getting product with id ${id}...`);
   return {
     id: 1,
     name: "Curso de Marketing Digital 2025",
