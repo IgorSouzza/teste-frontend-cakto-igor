@@ -45,3 +45,13 @@ A integridade da lógica de negócio é validada através de uma suíte de teste
 ```bash
 npm run test
 ```
+
+## 🌍 Versão online
+[Acesse a versão online aqui](https://teste-frontend-cakto-igor.vercel.app/checkout/1)
+
+
+## 💡 Se tivesse mais tempo, o que você faria para aumentar a conversão deste checkout?
+
+- Adicionaria elementos que geram confiança, como selos de segurança ('Compra Segura'), logos das bandeiras de cartão, e talvez um pequeno depoimento de um cliente satisfeito.
+- Inclusão de um cronômetro para o fim da oferta ou um aviso de 'últimas vagas com este preço' para incentivar a decisão no momento.
+- Implementaria uma automação simples que, caso o usuário preencha o e-mail mas não conclua a compra, enviaria um lembrete amigável após algumas horas, talvez até com um pequeno benefício para incentivá-lo a voltar.
