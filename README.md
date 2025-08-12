@@ -40,7 +40,6 @@ Siga os passos abaixo para configurar e executar o projeto em seu ambiente de de
     ```bash
     npm run dev
     ```
-    _(Lembre-se de ajustar este comando se o seu script no `package.json` for diferente, como `npm start`)_.
 
 ## ✅ Testes
 
